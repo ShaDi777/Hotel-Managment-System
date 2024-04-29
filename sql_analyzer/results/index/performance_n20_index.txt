@@ -1,0 +1,118 @@
+===================================
+Query:  SELECT * FROM employees_departments ed
+                JOIN employees e
+                ON ed.employee_id = e.employee_id
+                WHERE ed.department_id = 734598; 
+===================================
+COST:
+	BEST: 29.35
+	AVERAGE: 29.350
+	WORST: 29.35
+
+PLANNING:
+	BEST: 0.109
+	AVERAGE: 0.142
+	WORST: 0.511
+
+EXECUTION:
+	BEST: 0.019
+	AVERAGE: 0.681
+	WORST: 2.554
+===================================
+
+===================================
+Query:  SELECT r.room_id
+                FROM rooms r
+                WHERE NOT EXISTS (
+                SELECT 1
+                    FROM reservations res
+                    WHERE res.room_id = r.room_id
+                    AND res.check_in_date < '2024-11-29 00:00:00'::date
+                    AND res.check_out_date > '2024-11-17 00:00:00'::date
+                ); 
+===================================
+COST:
+	BEST: 47295.34
+	AVERAGE: 60654.102
+	WORST: 82129.76
+
+PLANNING:
+	BEST: 0.111
+	AVERAGE: 0.128
+	WORST: 0.227
+
+EXECUTION:
+	BEST: 159.771
+	AVERAGE: 276.856
+	WORST: 527.712
+===================================
+
+===================================
+Query:  SELECT * FROM reservations_guests rg
+                JOIN reservations r
+                ON rg.reservation_id = r.reservation_id
+                WHERE rg.guest_id = 128082; 
+===================================
+COST:
+	BEST: 29.35
+	AVERAGE: 29.350
+	WORST: 29.35
+
+PLANNING:
+	BEST: 0.115
+	AVERAGE: 0.124
+	WORST: 0.205
+
+EXECUTION:
+	BEST: 0.018
+	AVERAGE: 0.715
+	WORST: 2.338
+===================================
+
+===================================
+Query:  SELECT rms.room_id, AVG(rvw.rating)
+                FROM reviews rvw
+                JOIN reservations reserv
+                ON rvw.reservation_id = reserv.reservation_id
+                JOIN rooms rms
+                ON reserv.room_id = rms.room_id
+                GROUP BY rms.room_id; 
+===================================
+COST:
+	BEST: 234353.86
+	AVERAGE: 234353.860
+	WORST: 234353.86
+
+PLANNING:
+	BEST: 0.184
+	AVERAGE: 0.209
+	WORST: 0.282
+
+EXECUTION:
+	BEST: 1557.556
+	AVERAGE: 1685.309
+	WORST: 1960.117
+===================================
+
+===================================
+Query:  SELECT DISTINCT rc.room_id
+                FROM rooms_comforts rc
+                WHERE rc.comfort_id = 990572
+                AND rc.amount >= 2; 
+===================================
+COST:
+	BEST: 8.46
+	AVERAGE: 9.669
+	WORST: 12.49
+
+PLANNING:
+	BEST: 0.06
+	AVERAGE: 0.076
+	WORST: 0.223
+
+EXECUTION:
+	BEST: 0.029
+	AVERAGE: 0.040
+	WORST: 0.06
+===================================
+
